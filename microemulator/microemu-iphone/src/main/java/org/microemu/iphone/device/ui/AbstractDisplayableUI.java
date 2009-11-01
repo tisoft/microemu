@@ -34,7 +34,7 @@ import org.microemu.device.ui.CommandUI;
 import org.microemu.device.ui.DisplayableUI;
 import org.microemu.iphone.MicroEmulator;
 
-public abstract class AbstractUI<T extends Displayable> implements DisplayableUI {
+public abstract class AbstractDisplayableUI<T extends Displayable> implements DisplayableUI {
 
     public static final int TOOLBAR_HEIGHT = 40;
 
@@ -42,12 +42,19 @@ public abstract class AbstractUI<T extends Displayable> implements DisplayableUI
 
     final MicroEmulator microEmulator;
 
-	AbstractUI(MicroEmulator microEmulator) {
+    final T displayable;
+
+	AbstractDisplayableUI(MicroEmulator microEmulator, T displayable) {
 		super();
 		this.microEmulator = microEmulator;
+        this.displayable = displayable;
     }
 
-	public void addCommandUI(CommandUI cmd) {
+    public T getDisplayable() {
+        return displayable;
+    }
+
+    public void addCommandUI(CommandUI cmd) {
 		commands.add(cmd);
 //		ThreadDispatcher.dispatchOnMainThread(new Runnable() {
 //			public void run() {

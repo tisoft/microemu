@@ -29,13 +29,8 @@ package org.microemu.iphone;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import javax.microedition.lcdui.Display;
-import javax.microedition.lcdui.TextBox;
 import javax.microedition.midlet.MIDlet;
-import javax.microedition.midlet.MIDletStateChangeException;
 
 import org.microemu.MIDletBridge;
 import org.microemu.MIDletContext;
@@ -49,7 +44,8 @@ import org.microemu.iphone.device.IPhoneDeviceDisplay;
 import org.microemu.iphone.device.IPhoneFontManager;
 import org.microemu.iphone.device.IPhoneInputMethod;
 import org.microemu.iphone.device.IPhoneRecordStoreManager;
-import org.microemu.iphone.device.ui.AbstractUI;
+import org.microemu.iphone.device.ui.AbstractDisplayableUI;
+import org.microemu.midp.examples.simpledemo.SimpleDemoMIDlet;
 import org.xmlvm.iphone.*;
 
 
@@ -64,22 +60,7 @@ public class MicroEmulator {
 
         public MIDlet initMIDlet(boolean startMidlet) {
             try {
-                MIDlet midlet = new MIDlet() {
-                    @Override
-                    protected void startApp() throws MIDletStateChangeException {
-                        Display.getDisplay(this).setCurrent(new TextBox("Hello World", "test", 1000, 0));
-                    }
-
-                    @Override
-                    protected void pauseApp() {
-                        //To change body of implemented methods use File | Settings | File Templates.
-                    }
-
-                    @Override
-                    protected void destroyApp(boolean unconditional) throws MIDletStateChangeException {
-                        //To change body of implemented methods use File | Settings | File Templates.
-                    }
-                };
+                MIDlet midlet = new SimpleDemoMIDlet();
                 //set the classloader, so that resource loading works
                 MIDletBridge.getMIDletAccess(midlet).startApp();
                 return midlet;
@@ -144,7 +125,7 @@ public class MicroEmulator {
         final IPhoneCommon common = new IPhoneCommon(new IPhoneDevice(this));
         deviceDisplay = new IPhoneDeviceDisplay(common);
         deviceDisplay.displayRectangleWidth = (int) getWindow().getBounds().size.width;
-        deviceDisplay.displayRectangleHeight = (int) getWindow().getBounds().size.height - AbstractUI.TOOLBAR_HEIGHT;
+        deviceDisplay.displayRectangleHeight = (int) getWindow().getBounds().size.height - AbstractDisplayableUI.TOOLBAR_HEIGHT;
 
         System.setProperty("microedition.platform", "microemulator-iphone");
         System.setProperty("microedition.locale", "en-us");

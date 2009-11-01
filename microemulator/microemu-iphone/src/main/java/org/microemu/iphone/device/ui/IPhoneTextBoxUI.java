@@ -25,8 +25,6 @@
  */
 package org.microemu.iphone.device.ui;
 
-import java.lang.reflect.Field;
-
 import javax.microedition.lcdui.TextBox;
 import javax.microedition.lcdui.TextField;
 
@@ -35,7 +33,7 @@ import org.microemu.device.ui.TextBoxUI;
 import org.microemu.iphone.MicroEmulator;
 import org.xmlvm.iphone.UITextView;
 
-public class IPhoneTextBoxUI extends AbstractUI<TextBox> implements TextBoxUI {
+public class IPhoneTextBoxUI extends AbstractDisplayableUI<TextBox> implements TextBoxUI {
 
     private final class TextBoxField extends TextField {
         public TextBoxField(TextField textField) {
@@ -60,7 +58,7 @@ public class IPhoneTextBoxUI extends AbstractUI<TextBox> implements TextBoxUI {
     private UITextView textView;
 
     public IPhoneTextBoxUI(MicroEmulator microEmulator, TextBox textBox) {
-        super(microEmulator);
+        super(microEmulator, textBox);
 
 //        try {
 //            Field tf = TextBox.class.getDeclaredField("tf");
@@ -99,7 +97,6 @@ public class IPhoneTextBoxUI extends AbstractUI<TextBox> implements TextBoxUI {
         System.out.println("IPhoneTextBoxUI.showNotify()");
         if (textView == null) {
             textView = new UITextView(microEmulator.getWindow().getBounds());
-
             textView.setText("Test");
             microEmulator.getWindow().addSubview(textView);
         }

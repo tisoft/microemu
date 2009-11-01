@@ -26,27 +26,7 @@
  */
 package org.microemu.iphone;
 
-import org.microemu.MIDletBridge;
-import org.microemu.MIDletContext;
-import org.microemu.RecordStoreManager;
-import org.microemu.app.CommonInterface;
-import org.microemu.app.launcher.Launcher;
-import org.microemu.device.Device;
-import org.microemu.device.DeviceFactory;
-import org.microemu.iphone.device.*;
-import org.microemu.iphone.device.ui.AbstractUI;
-import org.xmlvm.iphone.CGRect;
 import org.xmlvm.iphone.UIApplication;
-import org.xmlvm.iphone.UIScreen;
-import org.xmlvm.iphone.UIWindow;
-
-import javax.microedition.lcdui.Display;
-import javax.microedition.lcdui.TextBox;
-import javax.microedition.midlet.MIDlet;
-import javax.microedition.midlet.MIDletStateChangeException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MicroEmulatorApplication extends UIApplication {

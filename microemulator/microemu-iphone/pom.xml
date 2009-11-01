@@ -42,6 +42,7 @@
                     <options>
                         <option>-dontoptimize</option>
                         <option>-keep public class * extends org.xmlvm.iphone.UIApplication { *; }</option>
+                        <option>-whyareyoukeeping class *</option>
                     </options>
                     <libs><lib>${ANDROID_SDK}/android.jar</lib></libs>
                     <assembly>
@@ -57,6 +58,10 @@
                             <inclusion>
                                 <groupId>org.microemu</groupId>
                                 <artifactId>microemu-javase</artifactId>
+                            </inclusion>
+                            <inclusion>
+                                <groupId>org.microemu</groupId>
+                                <artifactId>microemu-demo</artifactId>
                             </inclusion>
                         </inclusions>
                     </assembly>
@@ -78,7 +83,11 @@
             <artifactId>microemu-javase</artifactId>
             <version>${project.version}</version>
         </dependency>
- 
+        <dependency>
+            <groupId>org.microemu</groupId>
+            <artifactId>microemu-demo</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.xmlvm.compat-lib</groupId>
             <artifactId>iphone</artifactId>

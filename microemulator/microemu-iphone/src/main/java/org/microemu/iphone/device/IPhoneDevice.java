@@ -38,8 +38,7 @@ import org.microemu.device.FontManager;
 import org.microemu.device.InputMethod;
 import org.microemu.device.ui.*;
 import org.microemu.iphone.MicroEmulator;
-import org.microemu.iphone.device.ui.IPhoneTextBoxUI;
-import org.microemu.iphone.device.ui.IPhoneTextFieldUI;
+import org.microemu.iphone.device.ui.*;
 
 public class IPhoneDevice implements Device {
 	private final UIFactory ui = new UIFactory() {
@@ -78,46 +77,46 @@ public class IPhoneDevice implements Device {
 		}
 
 		public AlertUI createAlertUI(Alert alert) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
-		}
+            return new IPhoneAlertUI(microEmulator, alert);
+        }
 
 		public CanvasUI createCanvasUI(Canvas canvas) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return new IPhoneCanvasUI(microEmulator, canvas);
 		}
 
 		public FormUI createFormUI(Form form) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return new IPhoneFormUI(microEmulator, form);
 		}
 
 		public ListUI createListUI(List list) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return new IPhoneListUI(microEmulator, list);
 		}
 
 		public TextBoxUI createTextBoxUI(TextBox textBox) {
 			return new IPhoneTextBoxUI(microEmulator, textBox);
 		}
 		public CommandUI createCommandUI(Command command) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return new IPhoneCommandUI(command);
 		}
 
         public ChoiceGroupUI createChoiceGroupUI(ChoiceGroup choiceGroup, int choiceType) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return new IPhoneChoiceGroupUI();
         }
 
         public CustomItemUI createCustomItemUI(CustomItemAccess customItemAccess) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return null;
         }
 
         public DateFieldUI createDateFieldUI(DateField dateField) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return new IPhoneDateFieldUI();
         }
 
         public GaugeUI createGaugeUI(Gauge gauge) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return new IPhoneGaugeUI();
         }
 
         public ImageStringItemUI createImageStringItemUI(Item item) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return new IPhoneImageStringItemUI();
         }
 
         public TextFieldUI createTextFieldUI(TextField textField) {
