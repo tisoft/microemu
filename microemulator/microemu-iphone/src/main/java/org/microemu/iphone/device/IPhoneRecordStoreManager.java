@@ -25,10 +25,7 @@
  */
 package org.microemu.iphone.device;
 
-import javax.microedition.rms.RecordStore;
-import javax.microedition.rms.RecordStoreException;
-import javax.microedition.rms.RecordStoreNotFoundException;
-import javax.microedition.rms.RecordStoreNotOpenException;
+import javax.microedition.rms.*;
 
 import org.microemu.MicroEmulator;
 import org.microemu.RecordStoreManager;
@@ -37,11 +34,11 @@ import org.microemu.util.RecordStoreImpl;
 
 public class IPhoneRecordStoreManager implements RecordStoreManager {
 
-	public IPhoneRecordStoreManager(org.microemu.iphone.MicroEmulator microEmulator) {
+	public IPhoneRecordStoreManager() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void deleteRecordStore(String recordStoreName) throws RecordStoreNotFoundException, RecordStoreException {
+	public void deleteRecordStore(String recordStoreName) throws RecordStoreException {
 		// TODO Auto-generated method stub
 
 	}
@@ -83,14 +80,20 @@ public class IPhoneRecordStoreManager implements RecordStoreManager {
 		return store;
 	}
 
-	public void saveChanges(RecordStoreImpl recordStoreImpl) throws RecordStoreNotOpenException, RecordStoreException {
+    public void setRecordListener(ExtendedRecordListener recordListener) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void setRecordListener(ExtendedRecordListener recordListener) {
-		// TODO Auto-generated method stub
+    public void loadRecord(RecordStoreImpl recordStoreImpl, int recordId) throws RecordStoreException {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 
-	}
+    public void deleteRecord(RecordStoreImpl recordStoreImpl, int recordId) throws RecordStoreException {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 
+    public void saveRecord(RecordStoreImpl recordStoreImpl, int recordId) throws RecordStoreException {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

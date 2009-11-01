@@ -27,94 +27,49 @@ package org.microemu.iphone.device.ui;
 
 import java.util.Vector;
 
-import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Displayable;
-
-import joc.Message;
-import joc.Selector;
-import obc.NSMutableArray;
-import obc.NSObject;
-import obc.UIBarButtonItem;
-import obc.UIToolbar;
 
 import org.microemu.device.ui.CommandUI;
 import org.microemu.device.ui.DisplayableUI;
 import org.microemu.iphone.MicroEmulator;
-import org.microemu.iphone.ThreadDispatcher;
 
-public abstract class AbstractUI<T extends Displayable> extends NSObject implements DisplayableUI {
+public abstract class AbstractUI<T extends Displayable> implements DisplayableUI {
 
-	public static final int NAVIGATION_HEIGHT = 40;
+    public static final int TOOLBAR_HEIGHT = 40;
 
-	public static final int TOOLBAR_HEIGHT = 40;
+	private final Vector<CommandUI> commands = new Vector<CommandUI>();
 
-	protected Vector<CommandUI> commands = new Vector<CommandUI>();
+    final MicroEmulator microEmulator;
 
-	protected CommandListener commandListener;
-
-	protected UIToolbar toolbar;
-
-	protected T displayable;
-
-	protected MicroEmulator microEmulator;
-
-	protected AbstractUI(MicroEmulator microEmulator, T displayable) {
+	AbstractUI(MicroEmulator microEmulator) {
 		super();
 		this.microEmulator = microEmulator;
-		this.displayable = displayable;
-	}
+    }
 
 	public void addCommandUI(CommandUI cmd) {
 		commands.add(cmd);
-		ThreadDispatcher.dispatchOnMainThread(new Runnable() {
-			public void run() {
-				updateToolbar();
-			}
-		}, false);
+//		ThreadDispatcher.dispatchOnMainThread(new Runnable() {
+//			public void run() {
+//				updateToolbar();
+//			}
+//		}, false);
 	}
 
-	protected void updateToolbar() {
-		if (toolbar != null) {
-			NSMutableArray items = new NSMutableArray().initWithCapacity$(commands.size());
-			for (int i = 0; i < commands.size(); i++) {
-				CommandUI command = commands.get(i);
-				System.out.println(command.getCommand().getLabel());
-				items.setObject$atIndex$(new UIBarButtonItem().initWithTitle$style$target$action$(command.getCommand().getLabel(),
-						0, new CommandCaller(command.getCommand()), new Selector("call")), i);
-			}
-			toolbar.setItems$(items);
-		}
-	}
-
-	public void removeCommandUI(CommandUI cmd) {
+    public void removeCommandUI(CommandUI cmd) {
 		commands.remove(cmd);
-		ThreadDispatcher.dispatchOnMainThread(new Runnable() {
-			public void run() {
-				updateToolbar();
-			}
-		}, false);
+//		ThreadDispatcher.dispatchOnMainThread(new Runnable() {
+//			public void run() {
+//				updateToolbar();
+//			}
+//		}, false);
 	}
 
-	public void setCommandListener(CommandListener l) {
-		commandListener = l;
-	}
+    public void setCommandListener(CommandListener l) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 
-	class CommandCaller extends NSObject {
-		private Command command;
-
-		private CommandCaller(Command command) {
-			super();
-			this.command = command;
-		}
-
-		@Message
-		public void call() {
-			commandListener.commandAction(command, displayable);
-		}
-	}
-	
-	public Vector getCommandsUI() {
+    public Vector getCommandsUI() {
 		return commands;
 	}
 }

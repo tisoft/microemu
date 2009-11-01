@@ -27,29 +27,18 @@ package org.microemu.iphone.device;
 
 import javax.microedition.lcdui.Font;
 
-import joc.Scope;
-
-import obc.NSString;
-import obc.UIFont;
-
 import org.microemu.device.FontManager;
-import org.microemu.iphone.ThreadDispatcher;
+import org.xmlvm.iphone.UIFont;
 
 public class IPhoneFontManager implements FontManager {
 
-	private UIFont uifont;
-	
-	public IPhoneFontManager() {
-		ThreadDispatcher.dispatchOnMainThread(new Runnable(){public void run() {
-			uifont=(UIFont)UIFont.$systemFontOfSize$(9.f);
-		}}, false);
+    public IPhoneFontManager() {
+//		ThreadDispatcher.dispatchOnMainThread(new Runnable(){public void run() {
+        UIFont uifont = new UIFont();
+//		}}, false);
 	}
-	
-	public UIFont getUIFont(Font font){
-		return uifont;
-	}
-	
-	public int charWidth(Font f, char ch) {
+
+    public int charWidth(Font f, char ch) {
 		return stringWidth(f, String.valueOf(ch));
 	}
 
@@ -58,11 +47,11 @@ public class IPhoneFontManager implements FontManager {
 	}
 
 	public int getBaselinePosition(Font f) {
-		return (int)(uifont.capHeight());
+		return 5;
 	}
 
 	public int getHeight(Font f) {
-		return (int)(uifont.capHeight()+uifont.leading());
+		return 10;
 	}
 
 	public void init() {
@@ -70,14 +59,12 @@ public class IPhoneFontManager implements FontManager {
 
 	}
 
-	public int stringWidth(Font f, String str) {
-		Scope scope=new Scope();
-		NSString nsstring = new NSString().initWithString$(str);
-		try {
-			return (int)nsstring.sizeWithFont$(getUIFont(f)).width;
-		} finally {
-			scope.close();
-		}
+    public int substringWidth(Font f, String str, int offset, int len) {
+        return stringWidth(f, str.substring(offset, len));
+    }
+
+    public int stringWidth(Font f, String str) {
+		return str.length()*10;
 	}
 
 }

@@ -29,23 +29,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.Sprite;
-
-import obc.UIView;
 
 import org.microemu.DisplayAccess;
 import org.microemu.MIDletAccess;
 import org.microemu.MIDletBridge;
 import org.microemu.MicroEmulator;
 import org.microemu.device.DeviceDisplay;
-import org.microemu.device.MutableImage;
-import org.microemu.device.ui.CanvasUI;
 import org.microemu.device.ui.DisplayableUI;
-import org.microemu.device.ui.FormUI;
-import org.microemu.iphone.device.ui.IPhoneCanvasUI;
-import org.microemu.iphone.device.ui.IPhoneFormUI;
 
 public class IPhoneDeviceDisplay implements DeviceDisplay {
 	
@@ -55,7 +47,7 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 	// TODO change this
 	public int displayRectangleHeight;
 	
-	private MicroEmulator emulator;
+	private final MicroEmulator emulator;
 	
 	public IPhoneDeviceDisplay(MicroEmulator emulator) {
 		this.emulator = emulator;
@@ -66,18 +58,22 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 	}
 
 	public Image createImage(Image source) {
-		if (source.isMutable()) {
-			return new IPhoneImmutableImage((IPhoneMutableImage) source);
-		} else {
+//		if (source.isMutable()) {
+//			return new IPhoneImmutableImage((IPhoneMutableImage) source);
+//		} else {
 			return source;
-		}
+//		}
 	}
 
 	public Image createImage(InputStream is) throws IOException {
         byte[] imageData=getStreamAsByteArray(is);
         return createImage(imageData, 0, imageData.length);
 	}
-	
+
+    public Image createImage(int width, int height, boolean withAlpha, int fillColor) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     /**
      * Returns the contents of the input stream as byte array.
      *
@@ -112,17 +108,9 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
         }
         return byteStream.toByteArray();
     }
-	
-	public Image createImage(int width, int height) {
-		if (width <= 0 || height <= 0) {
-			throw new IllegalArgumentException();
-		}
 
-		return new IPhoneMutableImage(width, height);
-	}
-
-	public Image createImage(byte[] imageData, int imageOffset, int imageLength) {
-		return new IPhoneImmutableImage(imageData, imageOffset, imageLength);
+    public Image createImage(byte[] imageData, int imageOffset, int imageLength) {
+		return null;
 	}
 
 	public Image createImage(Image image, int x, int y, int width, int height, int transform) {
@@ -135,11 +123,11 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 
 		int[] rgbData = new int[height * width];
 		int[] rgbTransformedData = new int[height * width];
-		if (image instanceof IPhoneImmutableImage) {
-			((IPhoneImmutableImage) image).getRGB(rgbData, 0, width, x, y, width, height);
-		} else {
-			((IPhoneMutableImage) image).getRGB(rgbData, 0, width, x, y, width, height);
-		}
+//		if (image instanceof IPhoneImmutableImage) {
+//			((IPhoneImmutableImage) image).getRGB(rgbData, 0, width, x, y, width, height);
+//		} else {
+//			((IPhoneMutableImage) image).getRGB(rgbData, 0, width, x, y, width, height);
+//		}
 
 		int colIncr, rowIncr, offset;
 
@@ -242,14 +230,10 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 			}
 		}
 		
-		return new IPhoneImmutableImage(newrgb, width, height);
+		return null;
 	}
 
-	public MutableImage getDisplayImage() {
-        throw new UnsupportedOperationException("Currently not supported on iPhone");
-	}
-
-	public int getFullHeight() {
+    public int getFullHeight() {
 		return displayRectangleHeight;
 	}
 
@@ -285,7 +269,7 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 	}
 
 	public void repaint(int x, int y, int width, int height) {
-		paintDisplayable(x, y, width, height);
+		paintDisplayable();
 	}
 
 	public void setScrollDown(boolean arg0) {
@@ -296,7 +280,7 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 //        throw new UnsupportedOperationException("Currently not supported on iPhone");
 	}
 
-	public void paintDisplayable(int x, int y, int width, int height) {
+	void paintDisplayable() {
 		MIDletAccess ma = MIDletBridge.getMIDletAccess();
 		if (ma == null) {
 			return;
@@ -307,8 +291,7 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 		}
 		DisplayableUI current = da.getCurrentUI();
 		if (current == null) {
-			return;
-		}
+        }
 
 		// TODO
 		// g.save(android.graphics.Canvas.CLIP_SAVE_FLAG);
@@ -319,18 +302,18 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 		// }
 		// TODO
 		// Font oldf = g.getFont();
-		if (current instanceof IPhoneCanvasUI) {
-			UIView view = ((IPhoneCanvasUI) current).getCanvasView();
-			System.out.println("Need paint: "+this+" "+view);
-			view.setNeedsDisplay();
+//		if (current instanceof IPhoneCanvasUI) {
+//			UIView view = ((IPhoneCanvasUI) current).getCanvasView();
+//			System.out.println("Need paint: "+this+" "+view);
+//			view.setNeedsDisplay();
 //			view.setNeedsDisplayInRect$(new CGRect(x,y,width,height));
-		} else if (current instanceof IPhoneFormUI){
-			IPhoneFormUI formUI=(IPhoneFormUI)current;
-			formUI.updateLayout();
-		} else {
+//		} else if (current instanceof IPhoneFormUI){
+//			IPhoneFormUI formUI=(IPhoneFormUI)current;
+//			formUI.updateLayout();
+//		} else {
 			// TODO extend DisplayableUI interface
 			//current.paint();
-		}
+//		}
 		// TODO
 		// g.setFont(oldf);
 		// TODO

@@ -18,66 +18,6 @@
 
 	<description>iphone</description>
 
-	<repositories>
-		<repository>
-			<id>maven.tisoft.de/repository</id>
-			<name>tisoft Maven Repository</name>
-			<url>http://maven.tisoft.de/repository/
-			</url>
-		</repository>
-		<repository>
-			<id>evolvis-release-repository</id>
-			<name>evolvis.org release repository</name>
-			<url>http://maven-repo.evolvis.org/releases
-			</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>evolvis-snapshot-repository</id>
-			<name>evolvis.org snapshot repository</name>
-			<url>http://maven-repo.evolvis.org/snapshots
-			</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>evolvis-release-repository</id>
-			<name>evolvis.org release repository</name>
-			<url>http://maven-repo.evolvis.org/releases
-			</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-		<pluginRepository>
-			<id>evolvis-snapshot-repository</id>
-			<name>evolvis.org snapshot repository</name>
-			<url>http://maven-repo.evolvis.org/snapshots
-			</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -87,58 +27,42 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>de.tarent.maven.plugins</groupId>
-				<artifactId>maven-pkg-plugin</artifactId>
-				<version>2.1.0-SNAPSHOT</version>
-				<configuration>
-					<defaultDistro>iphoneos</defaultDistro>
-					<shortDescription>MicroEmulator</shortDescription>
-					<defaults>
-						<mainClass>org.microemu.iphone.MicroEmulator
-						</mainClass>
-						<section>Java</section>
-						<maintainer>Markus Heberling &lt;markus@tisoft.de&gt;</maintainer>
-						<architecture>iphoneos-arm</architecture>
-						<datadir>/Applications/MicroEmulator.app</datadir>
-						<dataFiles>
-							<!--
-								.desktop entry which lies under
-								${project_base}/src/main/auxfiles and is copied into
-								/usr/share/applications/hildon
-							-->
-							<dataFile>
-								<from>Info.plist</from>
-								<to>.</to>
-							</dataFile>
-							<dataFile>
-								<from>Default.png</from>
-								<to>.</to>
-							</dataFile>
-							<dataFile>
-								<from>icon.png</from>
-								<to>.</to>
-							</dataFile>
-							<dataFile>
-								<from>MicroEmulator</from>
-								<to>.</to>
-							</dataFile>
-						</dataFiles>
-						<postinstScript>postInst.sh</postinstScript>
-						<prermScript>preRm.sh</prermScript>
-					</defaults>
-					<auxPackageMapURL>file:${basedir}/src/main/auxfiles/pm-iphoneos.xml
-					</auxPackageMapURL>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>pkg</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+	              <plugin>
+                <groupId>com.pyx4me</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>proguard</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <options>
+                        <option>-dontoptimize</option>
+                        <option>-keep public class * extends org.xmlvm.iphone.UIApplication { *; }</option>
+                    </options>
+                    <libs><lib>${ANDROID_SDK}/android.jar</lib></libs>
+                    <assembly>
+                        <inclusions>
+                            <inclusion>
+                                <groupId>org.microemu</groupId>
+                                <artifactId>microemu-cldc</artifactId>
+                            </inclusion>
+                            <inclusion>
+                                <groupId>org.microemu</groupId>
+                                <artifactId>microemu-midp</artifactId>
+                            </inclusion>
+                            <inclusion>
+                                <groupId>org.microemu</groupId>
+                                <artifactId>microemu-javase</artifactId>
+                            </inclusion>
+                        </inclusions>
+                    </assembly>
+                    <obfuscate>false</obfuscate>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
@@ -156,20 +80,12 @@
         </dependency>
  
         <dependency>
-			<groupId>iphone</groupId>
-			<artifactId>jocstrap</artifactId>
-			<version>1.0.2549-8</version>
-		</dependency>
-		<dependency>
-			<groupId>iphone</groupId>
-			<artifactId>uicaboodle</artifactId>
-			<version>1.0.2475-2</version>
-		</dependency>
-		<dependency>
-			<groupId>iphone</groupId>
-			<artifactId>straptease</artifactId>
-			<version>0.7</version>
-		</dependency>
+            <groupId>org.xmlvm.compat-lib</groupId>
+            <artifactId>iphone</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+ 
         
     </dependencies>
 

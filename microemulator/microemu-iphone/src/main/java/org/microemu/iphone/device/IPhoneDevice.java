@@ -29,98 +29,107 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.microedition.lcdui.Alert;
-import javax.microedition.lcdui.Canvas;
-import javax.microedition.lcdui.Command;
-import javax.microedition.lcdui.Display;
-import javax.microedition.lcdui.Form;
-import javax.microedition.lcdui.Image;
-import javax.microedition.lcdui.List;
-import javax.microedition.lcdui.TextBox;
+import javax.microedition.lcdui.*;
 
-import joc.Scope;
-
+import org.microemu.CustomItemAccess;
 import org.microemu.device.Device;
 import org.microemu.device.DeviceDisplay;
 import org.microemu.device.FontManager;
 import org.microemu.device.InputMethod;
-import org.microemu.device.ui.AlertUI;
-import org.microemu.device.ui.CanvasUI;
-import org.microemu.device.ui.CommandUI;
-import org.microemu.device.ui.EventDispatcher;
-import org.microemu.device.ui.FormUI;
-import org.microemu.device.ui.ListUI;
-import org.microemu.device.ui.TextBoxUI;
-import org.microemu.device.ui.UIFactory;
+import org.microemu.device.ui.*;
 import org.microemu.iphone.MicroEmulator;
-import org.microemu.iphone.ThreadDispatcher;
-import org.microemu.iphone.device.ui.IPhoneAlertUI;
-import org.microemu.iphone.device.ui.IPhoneCanvasUI;
-import org.microemu.iphone.device.ui.IPhoneCommandUI;
-import org.microemu.iphone.device.ui.IPhoneFormUI;
-import org.microemu.iphone.device.ui.IPhoneListUI;
 import org.microemu.iphone.device.ui.IPhoneTextBoxUI;
+import org.microemu.iphone.device.ui.IPhoneTextFieldUI;
 
 public class IPhoneDevice implements Device {
-	private UIFactory ui = new UIFactory() {
+	private final UIFactory ui = new UIFactory() {
 
 		public EventDispatcher createEventDispatcher(Display display) {
 			final EventDispatcher eventDispatcher = new EventDispatcher() {
 
 				@Override
 				public void run() {
-					Scope scope = new Scope();
-					try {
-						super.run();
-					} finally {
-						scope.close();
-					}
+					//super.run();
 				}
 
-				@Override
+                @Override
+                public void put(Runnable runnable) {
+                    runnable.run();
+                }
+
+                @Override
+                public void put(Event event) {
+                    event.run();
+                }
+
+                @Override
 				protected void post(Event event) {
-					ThreadDispatcher.dispatchOnMainThread(event, false);
+					//ThreadDispatcher.dispatchOnMainThread(event, false);
+                    event.run();
 				}
 
 			};
 
-			Thread thread = new Thread(eventDispatcher, EventDispatcher.EVENT_DISPATCHER_NAME);
-			thread.setDaemon(true);
-			thread.start();
+//			Thread thread = new Thread(eventDispatcher, EventDispatcher.EVENT_DISPATCHER_NAME);
+//			thread.setDaemon(true);
+//			thread.start();
 
 			return eventDispatcher;
 		}
 
 		public AlertUI createAlertUI(Alert alert) {
-			return new IPhoneAlertUI(microEmulator, alert);
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
 		}
 
 		public CanvasUI createCanvasUI(Canvas canvas) {
-			return new IPhoneCanvasUI(microEmulator, canvas);
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
 		}
 
 		public FormUI createFormUI(Form form) {
-			return new IPhoneFormUI(microEmulator, form);
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
 		}
 
 		public ListUI createListUI(List list) {
-			return new IPhoneListUI(microEmulator, list);
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
 		}
 
 		public TextBoxUI createTextBoxUI(TextBox textBox) {
 			return new IPhoneTextBoxUI(microEmulator, textBox);
 		}
 		public CommandUI createCommandUI(Command command) {
-			return new IPhoneCommandUI(microEmulator, command);
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
 		}
 
-	};
+        public ChoiceGroupUI createChoiceGroupUI(ChoiceGroup choiceGroup, int choiceType) {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
 
-	private MicroEmulator microEmulator;
+        public CustomItemUI createCustomItemUI(CustomItemAccess customItemAccess) {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
 
-	private Map systemProperties = new HashMap();
+        public DateFieldUI createDateFieldUI(DateField dateField) {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
 
-	private Vector softButtons = new Vector();
+        public GaugeUI createGaugeUI(Gauge gauge) {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        public ImageStringItemUI createImageStringItemUI(Item item) {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        public TextFieldUI createTextFieldUI(TextField textField) {
+            return new IPhoneTextFieldUI();
+        }
+    };
+
+	private final MicroEmulator microEmulator;
+
+	private final Map systemProperties = new HashMap();
+
+	private final Vector softButtons = new Vector();
 
 	public IPhoneDevice(MicroEmulator microEmulator) {
 		this.microEmulator = microEmulator;
