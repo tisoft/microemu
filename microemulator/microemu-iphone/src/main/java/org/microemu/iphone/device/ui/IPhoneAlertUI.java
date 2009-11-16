@@ -6,10 +6,12 @@ import org.xmlvm.iphone.UIAlertView;
 import org.xmlvm.iphone.UIAlertViewDelegate;
 
 import javax.microedition.lcdui.Alert;
+import javax.microedition.lcdui.Command;
 
 public class IPhoneAlertUI extends AbstractDisplayableUI<Alert> implements AlertUI{
 
     private UIAlertViewDelegate alertViewDelegate;
+    private UIAlertView alertView;
 
     public IPhoneAlertUI(MicroEmulator microEmulator, Alert displayable) {
         super(microEmulator, displayable);
@@ -17,21 +19,26 @@ public class IPhoneAlertUI extends AbstractDisplayableUI<Alert> implements Alert
         alertViewDelegate=new UIAlertViewDelegate(){
             @Override
             public void clickedButtonAtIndex(UIAlertView alertView, int buttonIndex) {
-                //To change body of implemented methods use File | Settings | File Templates.
+                if(getCommandListener()!=null)
+                    getCommandListener().commandAction((Command)getCommandsUI().get(buttonIndex), getDisplayable());
             }
         };
     }
 
     public void setString(String str) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        if(alertView!=null)
+            alertView.setMessage(str);
     }
 
     public void hideNotify() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        if(alertView!=null){
+            alertView.dismissWithClickedButtonIndex(0, true);
+            alertView=null;
+        }
     }
 
     public void showNotify() {
-       UIAlertView alertView=new UIAlertView(getDisplayable().getTitle(),getDisplayable().getString(),alertViewDelegate,"Dismiss");
+        alertView=new UIAlertView(getDisplayable().getTitle(),getDisplayable().getString(),alertViewDelegate,((IPhoneCommandUI)getCommandsUI().firstElement()).getCommand().getLabel());
         alertView.show();
     }
 
