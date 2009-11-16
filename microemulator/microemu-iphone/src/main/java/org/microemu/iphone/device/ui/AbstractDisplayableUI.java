@@ -44,6 +44,8 @@ public abstract class AbstractDisplayableUI<T extends Displayable> implements Di
 
     final T displayable;
 
+    private CommandListener commandListener;
+
 	AbstractDisplayableUI(MicroEmulator microEmulator, T displayable) {
 		super();
 		this.microEmulator = microEmulator;
@@ -72,8 +74,12 @@ public abstract class AbstractDisplayableUI<T extends Displayable> implements Di
 //		}, false);
 	}
 
+    protected CommandListener getCommandListener() {
+        return commandListener;
+    }
+
     public void setCommandListener(CommandListener l) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        this.commandListener=l;
     }
 
     public Vector getCommandsUI() {

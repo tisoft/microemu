@@ -40,13 +40,7 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
 		private int type;
 		public ChoiceGroupDelegate(ChoiceGroup cg, int type) {
 			super(cg.getLabel(), List.EXCLUSIVE);
-/*			try {
-				Field choiceType=ChoiceGroup.class.getDeclaredField("choiceType");
-				choiceType.setAccessible(true);
-				choiceType.set(this, type);
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}   */
+			Introspect.setType(cg, type); 
 			
 			this.type=type;
 			for(int i=0;i<cg.size();i++){
@@ -116,7 +110,7 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
                 UITableViewCell cell = new UITableViewCell();
 //            cell.setReuseIdentifier("reuse");
 //        }
-            UILabel label = new UILabel();
+            UILabel label = new UILabel(cell.getBounds());
             label.setText(displayable.getString(idx.getRow()));
             cell.addSubview(label);
 //        if(choiceGroup.getType()==List.MULTIPLE&&displayable.isSelected(indexPath.row()))
@@ -150,8 +144,8 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
                 displayable.setSelectedIndex(indexPath.getRow(),true);
             }
             System.out.println(indexPath.getRow());
-    //		if(commandListener!=null&&selectCommand!=null&&choiceGroup.getType()==List.IMPLICIT)
-    //			commandListener.commandAction(selectCommand, displayable);
+ //   		if(getCommandListener()!=null&&selectCommand!=null&&choiceGroup.getType()==List.IMPLICIT)
+    			getCommandListener().commandAction(selectCommand, displayable);
         }
     };
 //	private UINavigationBar navigtionBar;
