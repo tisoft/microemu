@@ -2,14 +2,24 @@ package org.microemu.iphone.device.ui;
 
 import org.microemu.device.ui.AlertUI;
 import org.microemu.iphone.MicroEmulator;
+import org.xmlvm.iphone.UIAlertView;
+import org.xmlvm.iphone.UIAlertViewDelegate;
 
 import javax.microedition.lcdui.Alert;
 
 public class IPhoneAlertUI extends AbstractDisplayableUI<Alert> implements AlertUI{
 
+    private UIAlertViewDelegate alertViewDelegate;
 
     public IPhoneAlertUI(MicroEmulator microEmulator, Alert displayable) {
         super(microEmulator, displayable);
+
+        alertViewDelegate=new UIAlertViewDelegate(){
+            @Override
+            public void clickedButtonAtIndex(UIAlertView alertView, int buttonIndex) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
     }
 
     public void setString(String str) {
@@ -21,7 +31,8 @@ public class IPhoneAlertUI extends AbstractDisplayableUI<Alert> implements Alert
     }
 
     public void showNotify() {
-        //To change body of implemented methods use File | Settings | File Templates.
+       UIAlertView alertView=new UIAlertView(getDisplayable().getTitle(),getDisplayable().getString(),alertViewDelegate,"Dismiss");
+        alertView.show();
     }
 
     public void invalidate() {
