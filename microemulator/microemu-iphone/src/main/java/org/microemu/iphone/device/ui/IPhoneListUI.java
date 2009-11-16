@@ -84,7 +84,7 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
 			if(tableView!=null)
 //				ThreadDispatcher.dispatchOnMainThread(new Runnable() {
 //					public void run() {
-						tableView.reloadData();
+;//						tableView.reloadData();
 //					}
 //				}, false);
 		}
@@ -227,7 +227,7 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
 //			view.addSubview$(toolbar);
 //			updateToolbar();
 		}
-		tableView.reloadData();
+//		tableView.reloadData();
 
 //		view.retain();
 		microEmulator.getWindow().addSubview(view);

@@ -34,7 +34,7 @@ public class IPhoneFontManager implements FontManager {
 
     public IPhoneFontManager() {
 //		ThreadDispatcher.dispatchOnMainThread(new Runnable(){public void run() {
-        UIFont uifont = new UIFont();
+        UIFont uifont = UIFont.fontWithNameSize("Helvetica",9);
 //		}}, false);
 	}
 

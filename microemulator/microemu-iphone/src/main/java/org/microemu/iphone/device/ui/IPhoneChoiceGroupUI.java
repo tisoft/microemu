@@ -48,4 +48,8 @@ public class IPhoneChoiceGroupUI implements ChoiceGroupUI{
     public int size() {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    public void deleteAll() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
