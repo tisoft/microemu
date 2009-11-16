@@ -110,9 +110,7 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
                 UITableViewCell cell = new UITableViewCell();
 //            cell.setReuseIdentifier("reuse");
 //        }
-            UILabel label = new UILabel(cell.getBounds());
-            label.setText(displayable.getString(idx.getRow()));
-            cell.addSubview(label);
+            cell.getTextLabel().setText(displayable.getString(idx.getRow()));
 //        if(choiceGroup.getType()==List.MULTIPLE&&displayable.isSelected(indexPath.row()))
 //            cell.setAccessoryType(3);
 //        else
