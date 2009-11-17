@@ -13,4 +13,8 @@ public class Introspect {
     public static void setType(ChoiceGroup cg, int type){
         cg.choiceType=type;
     }
+
+    public static int getType(ChoiceGroup cg){
+        return cg.choiceType;
+    }
 }

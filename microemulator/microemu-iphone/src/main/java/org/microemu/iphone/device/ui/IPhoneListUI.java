@@ -84,7 +84,7 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
 			if(tableView!=null)
 //				ThreadDispatcher.dispatchOnMainThread(new Runnable() {
 //					public void run() {
-;//						tableView.reloadData();
+						tableView.reloadData();
 //					}
 //				}, false);
 		}
@@ -113,10 +113,10 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
 //            cell.setReuseIdentifier("reuse");
 //        }
             cell.getTextLabel().setText(displayable.getString(idx.getRow()));
-//        if(choiceGroup.getType()==List.MULTIPLE&&displayable.isSelected(indexPath.row()))
-//            cell.setAccessoryType(3);
-//        else
-//            cell.setAccessoryType(0);
+        if(choiceGroup.getType()==List.MULTIPLE&&displayable.isSelected(idx.getRow()))
+            cell.setAccessoryType(3);
+        else
+            cell.setAccessoryType(0);
             return cell;
         }
 
@@ -144,7 +144,8 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
                 displayable.setSelectedIndex(indexPath.getRow(),true);
             }
             System.out.println(indexPath.getRow());
- //   		if(getCommandListener()!=null&&selectCommand!=null&&choiceGroup.getType()==List.IMPLICIT)
+            System.out.println(choiceGroup.getType());
+    		if(getCommandListener()!=null&&selectCommand!=null&&choiceGroup.getType()==List.IMPLICIT)
     			getCommandListener().commandAction(selectCommand, displayable);
         }
     };
@@ -201,7 +202,7 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
 			view = new UIView(microEmulator.getWindow().getBounds());
 
             ChoiceGroup cgO = Introspect.getChoiceGroup(displayable);
-            choiceGroup=new ChoiceGroupDelegate(cgO,0);
+            choiceGroup=new ChoiceGroupDelegate(cgO,Introspect.getType(cgO));
             Introspect.setChoiceGroup(displayable, choiceGroup);
             
 
