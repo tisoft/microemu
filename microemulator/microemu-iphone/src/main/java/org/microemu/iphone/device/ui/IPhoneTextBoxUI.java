@@ -25,13 +25,14 @@
  */
 package org.microemu.iphone.device.ui;
 
+import javax.microedition.lcdui.Introspect;
 import javax.microedition.lcdui.TextBox;
 import javax.microedition.lcdui.TextField;
 
 
 import org.microemu.device.ui.TextBoxUI;
 import org.microemu.iphone.MicroEmulator;
-import org.xmlvm.iphone.UITextView;
+import org.xmlvm.iphone.*;
 
 public class IPhoneTextBoxUI extends AbstractDisplayableUI<TextBox> implements TextBoxUI {
 
@@ -56,19 +57,13 @@ public class IPhoneTextBoxUI extends AbstractDisplayableUI<TextBox> implements T
 
     private TextBoxField textField;
     private UITextView textView;
+    private UIView view;
+    private UINavigationBar navigationBar;
 
     public IPhoneTextBoxUI(MicroEmulator microEmulator, TextBox textBox) {
         super(microEmulator, textBox);
-
-//        try {
-//            Field tf = TextBox.class.getDeclaredField("tf");
-//            tf.setAccessible(true);
-//            textField = new TextBoxField((TextField) tf.get(textBox));
-//            tf.set(textBox, textField);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new RuntimeException(e);
-//        }
+        textField=new TextBoxField(Introspect.getTextField(textBox));
+        Introspect.setTextField(textBox, textField);
     }
 
     public int getCaretPosition() {
@@ -93,12 +88,47 @@ public class IPhoneTextBoxUI extends AbstractDisplayableUI<TextBox> implements T
 
     }
 
-    public void showNotify() {
-        System.out.println("IPhoneTextBoxUI.showNotify()");
-        if (textView == null) {
-            textView = new UITextView(microEmulator.getWindow().getBounds());
-            textView.setText("Test");
-            microEmulator.getWindow().addSubview(textView);
+	public void showNotify() {
+		System.out.println("IPhoneTextBoxUI.showNotify()");
+		if (view == null) {
+			view = new UIView(microEmulator.getWindow().getBounds());
+
+			navigationBar = new UINavigationBar(new CGRect(0, 0,
+					microEmulator.getWindow().getBounds().size.width, NAVIGATION_HEIGHT));
+            UINavigationItem title = new UINavigationItem(getDisplayable().getTitle());
+            title.setRightBarButtonItem(new UIBarButtonItem("Done", 0, new UIBarButtonItemDelegate() {
+                public void clicked() {
+                    //close keyboard
+                    textView.resignFirstResponder();
+                }
+            }));
+            navigationBar.pushNavigationItem(title, false);
+            view.addSubview(navigationBar);
+
+			textView = new UITextView(new CGRect(0, NAVIGATION_HEIGHT, microEmulator.getWindow().getBounds().size.width, microEmulator
+					.getWindow().getBounds().size.height
+					- NAVIGATION_HEIGHT - TOOLBAR_HEIGHT));
+
+
+
+
+			textView.setText(textField.getString());
+//			textView.setDelegate$(new NSObject(){
+//				@SuppressWarnings("unused")
+//				@Message(name="textViewDidChange:")
+//				public void textViewDidChange$(UITextView textView) {
+//				textField.setStringSilent(textView.text().toString());
+//
+//			}});
+			view.addSubview(textView);
+
+			toolbar = new UIToolbar(new CGRect(0,
+					microEmulator.getWindow().getBounds().size.height - TOOLBAR_HEIGHT,
+					microEmulator.getWindow().getBounds().size.width, TOOLBAR_HEIGHT));
+			view.addSubview(toolbar);
+			updateToolbar();
         }
+
+		microEmulator.getWindow().addSubview(view);
     }
 }
