@@ -200,10 +200,15 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
 		if (view==null) {
 			view = new UIView(microEmulator.getWindow().getBounds());
 
+            ChoiceGroup cgO = Introspect.getChoiceGroup(displayable);
+            choiceGroup=new ChoiceGroupDelegate(cgO,0);
+            Introspect.setChoiceGroup(displayable, choiceGroup);
+            
+
 			navigationBar = new UINavigationBar(new CGRect(0, 0,
 					microEmulator.getWindow().getBounds().size.width, NAVIGATION_HEIGHT));
 			UINavigationItem title = new UINavigationItem(displayable.getTitle());
-	//		title.setBackButtonTitle("Back");
+		//	title.setBackBarButtonItem();.setTitle("Back");
 			navigationBar.pushNavigationItem(title, false);
 			view.addSubview(navigationBar);
 			
@@ -214,16 +219,12 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
             tableView.setDataSource(dataSource);
             tableView.setDelegate(delegate);
 
-				ChoiceGroup cgO = Introspect.getChoiceGroup(displayable);
-            choiceGroup=new ChoiceGroupDelegate(cgO,0);
-				Introspect.setChoiceGroup(displayable, choiceGroup);
-
 			view.addSubview(tableView);
-//			toolbar = (UIToolbar) new UIToolbar().initWithFrame$(new CGRect(0,
-//					microEmulator.getWindow().bounds().size.height - TOOLBAR_HEIGHT, microEmulator.getWindow().bounds().size.width,
-//					TOOLBAR_HEIGHT));
-//			view.addSubview$(toolbar);
-//			updateToolbar();
+			toolbar = new UIToolbar(new CGRect(0,
+					microEmulator.getWindow().getBounds().size.height - TOOLBAR_HEIGHT, microEmulator.getWindow().getBounds().size.width,
+					TOOLBAR_HEIGHT));
+			view.addSubview(toolbar);
+			updateToolbar();
 		}
 //		tableView.reloadData();
 

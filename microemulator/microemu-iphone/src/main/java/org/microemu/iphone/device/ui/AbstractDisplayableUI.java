@@ -25,6 +25,7 @@
  */
 package org.microemu.iphone.device.ui;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.microedition.lcdui.CommandListener;
@@ -33,6 +34,9 @@ import javax.microedition.lcdui.Displayable;
 import org.microemu.device.ui.CommandUI;
 import org.microemu.device.ui.DisplayableUI;
 import org.microemu.iphone.MicroEmulator;
+import org.xmlvm.iphone.UIBarButtonItem;
+import org.xmlvm.iphone.UIBarButtonItemDelegate;
+import org.xmlvm.iphone.UIToolbar;
 
 public abstract class AbstractDisplayableUI<T extends Displayable> implements DisplayableUI {
 
@@ -40,12 +44,13 @@ public abstract class AbstractDisplayableUI<T extends Displayable> implements Di
 
     public static final int NAVIGATION_HEIGHT = 40;
 
-
 	private final Vector<CommandUI> commands = new Vector<CommandUI>();
 
     final MicroEmulator microEmulator;
 
     final T displayable;
+
+    protected UIToolbar toolbar;
 
     private CommandListener commandListener;
 
@@ -63,7 +68,7 @@ public abstract class AbstractDisplayableUI<T extends Displayable> implements Di
 		commands.add(cmd);
 //		ThreadDispatcher.dispatchOnMainThread(new Runnable() {
 //			public void run() {
-//				updateToolbar();
+				updateToolbar();
 //			}
 //		}, false);
 	}
@@ -72,7 +77,7 @@ public abstract class AbstractDisplayableUI<T extends Displayable> implements Di
 		commands.remove(cmd);
 //		ThreadDispatcher.dispatchOnMainThread(new Runnable() {
 //			public void run() {
-//				updateToolbar();
+				updateToolbar();
 //			}
 //		}, false);
 	}
@@ -87,5 +92,21 @@ public abstract class AbstractDisplayableUI<T extends Displayable> implements Di
 
     public Vector getCommandsUI() {
 		return commands;
+	}
+
+    	protected void updateToolbar() {
+		if (toolbar != null) {
+			ArrayList<UIBarButtonItem> items = new ArrayList<UIBarButtonItem>(commands.size());
+			for (int i = 0; i < commands.size(); i++) {
+				final CommandUI command = commands.get(i);
+				System.out.println(command.getCommand().getLabel());
+				items.add(new UIBarButtonItem(command.getCommand().getLabel(), 0, new UIBarButtonItemDelegate(){
+                    public void clicked() {
+                        commandListener.commandAction(command.getCommand(), displayable);
+                    }
+                }));
+			}
+			toolbar.setItems(items);
+		}
 	}
 }
