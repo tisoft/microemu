@@ -92,7 +92,7 @@ public class ImplFactory {
 	 * @param scheme
 	 */
 	public static void registerGCF(String scheme, Object implementation) {
-		if (!(implementation instanceof  ConnectorDelegate)) {
+		if (!(ConnectorDelegate.class.isAssignableFrom(implementation.getClass()))) {
 			throw new IllegalArgumentException();
 		}
 		if (scheme == null) {
