@@ -100,6 +100,8 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
 	
 	private UIView view;
 
+    private UINavigationBar navigationBar;
+
 	private ChoiceGroupDelegate choiceGroup;
 
     private UITableViewDataSource dataSource=new UITableViewDataSource(){
@@ -146,7 +148,6 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
     			getCommandListener().commandAction(selectCommand, displayable);
         }
     };
-//	private UINavigationBar navigtionBar;
 	
 	public IPhoneListUI(MicroEmulator microEmulator, List list) {
 		super(microEmulator, list);
@@ -199,18 +200,17 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
 		if (view==null) {
 			view = new UIView(microEmulator.getWindow().getBounds());
 
-//			navigtionBar = new UINavigationBar().initWithFrame$(new CGRect(0, 0,
-//					microEmulator.getWindow().bounds().size.width, NAVIGATION_HEIGHT));
-//			UINavigationItem title = new UINavigationItem().initWithTitle$(displayable.getTitle());
-//			title.setBackButtonTitle$("Back");
-//			navigtionBar.pushNavigationItem$(title);
-//			view.addSubview$(navigtionBar);
+			navigationBar = new UINavigationBar(new CGRect(0, 0,
+					microEmulator.getWindow().getBounds().size.width, NAVIGATION_HEIGHT));
+			UINavigationItem title = new UINavigationItem(displayable.getTitle());
+	//		title.setBackButtonTitle("Back");
+			navigationBar.pushNavigationItem(title, false);
+			view.addSubview(navigationBar);
 			
-//			tableView = new UITableView().initWithFrame$style$(
-//					new CGRect(0, NAVIGATION_HEIGHT, microEmulator.getWindow().bounds().size.width,
-//							microEmulator.getWindow().bounds().size.height - NAVIGATION_HEIGHT - TOOLBAR_HEIGHT), 0);
+			tableView = new UITableView(
+					new CGRect(0, NAVIGATION_HEIGHT, microEmulator.getWindow().getBounds().size.width,
+							microEmulator.getWindow().getBounds().size.height - NAVIGATION_HEIGHT - TOOLBAR_HEIGHT), 0);
 
-            tableView=new UITableView(view.getBounds());
             tableView.setDataSource(dataSource);
             tableView.setDelegate(delegate);
 

@@ -38,6 +38,9 @@ public abstract class AbstractDisplayableUI<T extends Displayable> implements Di
 
     public static final int TOOLBAR_HEIGHT = 40;
 
+    public static final int NAVIGATION_HEIGHT = 40;
+
+
 	private final Vector<CommandUI> commands = new Vector<CommandUI>();
 
     final MicroEmulator microEmulator;
