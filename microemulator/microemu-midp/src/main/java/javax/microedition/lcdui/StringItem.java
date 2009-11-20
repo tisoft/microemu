@@ -29,7 +29,7 @@ import org.microemu.device.ui.ImageStringItemUI;
 
 public class StringItem extends Item {
 
-	private StringComponent stringComponent;
+	StringComponent stringComponent;
 	private int appearanceMode;
 
 	public StringItem(String label, String text) {

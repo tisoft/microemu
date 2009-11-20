@@ -116,7 +116,7 @@ public class IPhoneDevice implements Device {
         }
 
         public ImageStringItemUI createImageStringItemUI(Item item) {
-            return new IPhoneImageStringItemUI();
+            return new IPhoneImageStringItemUI(microEmulator, item);
         }
 
         public TextFieldUI createTextFieldUI(TextField textField) {
