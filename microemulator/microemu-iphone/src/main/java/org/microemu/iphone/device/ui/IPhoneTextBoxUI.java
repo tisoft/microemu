@@ -36,7 +36,7 @@ import org.xmlvm.iphone.*;
 
 public class IPhoneTextBoxUI extends AbstractDisplayableUI<TextBox> implements TextBoxUI {
 
-    private final class TextBoxField extends TextField {
+    final class TextBoxField extends TextField {
         public TextBoxField(TextField textField) {
             super(textField.getLabel(), textField.getString(), textField.getMaxSize(), textField.getConstraints());
         }

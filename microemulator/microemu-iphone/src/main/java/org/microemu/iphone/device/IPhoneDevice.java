@@ -120,7 +120,7 @@ public class IPhoneDevice implements Device {
         }
 
         public TextFieldUI createTextFieldUI(TextField textField) {
-            return new IPhoneTextFieldUI();
+            return new IPhoneTextFieldUI(microEmulator, textField);
         }
     };
 

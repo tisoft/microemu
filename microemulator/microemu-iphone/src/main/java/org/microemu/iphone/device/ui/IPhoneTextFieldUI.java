@@ -29,14 +29,16 @@ import org.microemu.device.ui.TextBoxUI;
 import org.microemu.device.ui.TextFieldUI;
 import org.microemu.iphone.MicroEmulator;
 import org.xmlvm.iphone.UITextView;
+import org.xmlvm.iphone.UIView;
 
 import javax.microedition.lcdui.TextBox;
 import javax.microedition.lcdui.TextField;
 import java.lang.reflect.Field;
 
-public class IPhoneTextFieldUI implements TextFieldUI {
+public class IPhoneTextFieldUI extends AbstractItemUI<TextField> implements TextFieldUI {
 
-    public IPhoneTextFieldUI() {
+    public IPhoneTextFieldUI(MicroEmulator microEmulator, TextField item) {
+        super(microEmulator, item);
     }
 
     public void setLabel(String label) {
@@ -55,4 +57,12 @@ public class IPhoneTextFieldUI implements TextFieldUI {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public UIView getView() {
+        UITextView textView= new UITextView();
+
+        textView.setText(item.getString());
+
+        return textView;
+    }
 }
