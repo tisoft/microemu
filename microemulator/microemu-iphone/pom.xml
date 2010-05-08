@@ -1,33 +1,44 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://maven.apache.org/POM/4.0.0">
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://maven.apache.org/POM/4.0.0">
     <!-- @version $Revision$ ($Author$) $Date$ -->
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.microemu</groupId>
-		<artifactId>microemu</artifactId>
-		<version>3.0.0-SNAPSHOT</version><!--me-version-->
-		<relativePath>../pom.xml</relativePath>
-	</parent>
+    <parent>
+        <groupId>org.microemu</groupId>
+        <artifactId>microemu</artifactId>
+        <version>3.0.0-SNAPSHOT</version>
+        <!--me-version-->
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
-	<artifactId>microemu-iphone</artifactId>
-	<name>microemu-iphone</name>
+    <artifactId>microemu-iphone</artifactId>
+    <name>microemu-iphone</name>
 
-	<description>iphone</description>
+    <description>iphone</description>
 
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
-	              <plugin>
+    <properties>
+        <microemu.iphone.midlet>org.microemu.midp.examples.simpledemo.SimpleDemoMIDlet</microemu.iphone.midlet>
+    </properties>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>com.pyx4me</groupId>
                 <artifactId>proguard-maven-plugin</artifactId>
                 <executions>
@@ -42,9 +53,12 @@
                     <options>
                         <option>-dontoptimize</option>
                         <option>-keep public class * extends org.xmlvm.iphone.UIApplication { *; }</option>
+                        <option>-keep public class ${microemu.iphone.midlet} { *; }</option>
                         <option>-whyareyoukeeping class *</option>
                     </options>
-                    <libs><lib>${ANDROID_SDK}/android.jar</lib></libs>
+                    <libs>
+                        <lib>${ANDROID_SDK}/android.jar</lib>
+                    </libs>
                     <assembly>
                         <inclusions>
                             <inclusion>
@@ -68,8 +82,8 @@
                     <obfuscate>false</obfuscate>
                 </configuration>
             </plugin>
-		</plugins>
-	</build>
+        </plugins>
+    </build>
 
     <dependencies>
 
@@ -94,8 +108,8 @@
             <version>0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
- 
-        
+
+
     </dependencies>
 
 </project>

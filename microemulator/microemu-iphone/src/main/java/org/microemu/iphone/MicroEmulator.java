@@ -26,7 +26,9 @@
  */
 package org.microemu.iphone;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +47,6 @@ import org.microemu.iphone.device.IPhoneFontManager;
 import org.microemu.iphone.device.IPhoneInputMethod;
 import org.microemu.iphone.device.IPhoneRecordStoreManager;
 import org.microemu.iphone.device.ui.AbstractDisplayableUI;
-import org.microemu.midp.examples.simpledemo.SimpleDemoMIDlet;
 import org.xmlvm.iphone.*;
 
 
@@ -60,7 +61,7 @@ public class MicroEmulator {
 
         public MIDlet initMIDlet(boolean startMidlet) {
             try {
-                MIDlet midlet = new SimpleDemoMIDlet();
+                MIDlet midlet = (MIDlet) Class.forName(new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("microemu.iphone.midlet"))).readLine()).newInstance();
                 //set the classloader, so that resource loading works
                 MIDletBridge.getMIDletAccess(midlet).startApp();
                 return midlet;
