@@ -32,7 +32,7 @@ public class IPhoneAlertUI extends AbstractDisplayableUI<Alert> implements Alert
 
     public void hideNotify() {
         if(alertView!=null){
-            alertView.dismissWithClickedButtonIndex(0, true);
+            //alertView.(0, true);
             alertView=null;
         }
     }

@@ -2,9 +2,13 @@ package org.microemu.iphone.device.ui;
 
 import org.microemu.device.ui.ChoiceGroupUI;
 
+import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Image;
 
 public class IPhoneChoiceGroupUI implements ChoiceGroupUI{
+    public void setDefaultCommand(Command cmd) {
+    }
+
     public void setLabel(String label) {
         //To change body of implemented methods use File | Settings | File Templates.
     }

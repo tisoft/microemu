@@ -91,7 +91,8 @@ public class MicroEmulator {
             return new IPhoneRecordStoreManager();
         }
 
-        public InputStream getResourceAsStream(String name) {
+
+        public InputStream getResourceAsStream(Class origClass, String name) {
             return MIDletBridge.getCurrentMIDlet().getClass().getResourceAsStream(name);
         }
 

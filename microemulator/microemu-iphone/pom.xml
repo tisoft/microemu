@@ -103,8 +103,8 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.xmlvm.compat-lib</groupId>
-            <artifactId>iphone</artifactId>
+            <groupId>org.xmlvm.xmlvm2objc</groupId>
+            <artifactId>compat-lib</artifactId>
             <version>0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>

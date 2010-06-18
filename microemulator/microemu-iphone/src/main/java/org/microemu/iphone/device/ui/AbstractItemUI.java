@@ -34,6 +34,7 @@ import org.xmlvm.iphone.UIBarButtonItemDelegate;
 import org.xmlvm.iphone.UIToolbar;
 import org.xmlvm.iphone.UIView;
 
+import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Item;
@@ -57,4 +58,7 @@ public abstract class AbstractItemUI<T extends Item> implements ItemUI {
 
 
     public abstract UIView getView();
+
+    public void setDefaultCommand(Command cmd) {
+    }
 }

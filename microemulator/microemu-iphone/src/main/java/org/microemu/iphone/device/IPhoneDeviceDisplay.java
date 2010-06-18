@@ -29,7 +29,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
+import javax.microedition.lcdui.game.GameCanvas;
 import javax.microedition.lcdui.game.Sprite;
 
 import org.microemu.DisplayAccess;
@@ -54,7 +56,7 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 	}
 
 	public Image createImage(String name) throws IOException {
-		return createImage(emulator.getResourceAsStream(name));
+		return createImage(emulator.getResourceAsStream(getClass(), name));
 	}
 
 	public Image createImage(Image source) {
@@ -289,7 +291,7 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 		if (da == null) {
 			return;
 		}
-		DisplayableUI current = da.getCurrentUI();
+		DisplayableUI current = da.getDisplayableUI(da.getCurrent());
 		if (current == null) {
         }
 
@@ -324,5 +326,11 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 		// TODO
 		// g.restore();
 	}
-	
+
+    public Graphics getGraphics(GameCanvas gameCanvas) {
+        return null;
+    }
+
+    public void flushGraphics(GameCanvas gameCanvas, int x, int y, int width, int height) {
+    }
 }
