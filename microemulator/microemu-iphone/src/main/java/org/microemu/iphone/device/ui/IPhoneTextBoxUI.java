@@ -78,6 +78,10 @@ public class IPhoneTextBoxUI extends AbstractDisplayableUI<TextBox> implements T
         textField.setString(text);
     }
 
+    public void insert(String text, int position) {
+        textField.insert(text, position);
+    }
+
     public void hideNotify() {
         // TODO Auto-generated method stub
 

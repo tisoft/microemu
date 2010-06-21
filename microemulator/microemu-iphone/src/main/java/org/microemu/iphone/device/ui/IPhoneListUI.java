@@ -186,8 +186,11 @@ public class IPhoneListUI extends AbstractDisplayableUI<List> implements ListUI{
 		this.selectCommand=command;
 	}
 
+    public int size() {
+        return displayable.size();
+    }
 
-	public void hideNotify() {
+    public void hideNotify() {
 	}
 
 	public void invalidate() {
