@@ -31,10 +31,11 @@ import org.microemu.device.FontManager;
 import org.xmlvm.iphone.UIFont;
 
 public class IPhoneFontManager implements FontManager {
+    private final UIFont uifont;
 
     public IPhoneFontManager() {
 //		ThreadDispatcher.dispatchOnMainThread(new Runnable(){public void run() {
-        UIFont uifont = UIFont.fontWithNameSize("Helvetica",9);
+        uifont = UIFont.fontWithNameSize("Helvetica",9);
 //		}}, false);
 	}
 
@@ -67,4 +68,7 @@ public class IPhoneFontManager implements FontManager {
 		return str.length()*10;
 	}
 
+    public UIFont getUIFont(Font currentfont) {
+        return uifont;
+    }
 }
