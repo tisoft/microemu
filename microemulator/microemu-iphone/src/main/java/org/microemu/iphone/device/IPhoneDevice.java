@@ -42,32 +42,32 @@ import org.microemu.iphone.device.ui.*;
 
 public class IPhoneDevice implements Device {
 	private final UIFactory ui = new UIFactory() {
+        final EventDispatcher eventDispatcher = new EventDispatcher() {
 
+            @Override
+            public void run() {
+                //super.run();
+            }
+
+            @Override
+            public void put(Runnable runnable) {
+                runnable.run();
+            }
+
+            @Override
+            public void put(Event event) {
+                event.run();
+            }
+
+            @Override
+            protected void post(Event event) {
+                //ThreadDispatcher.dispatchOnMainThread(event, false);
+                event.run();
+            }
+
+        };
+ 
 		public EventDispatcher createEventDispatcher(Display display) {
-			final EventDispatcher eventDispatcher = new EventDispatcher() {
-
-				@Override
-				public void run() {
-					//super.run();
-				}
-
-                @Override
-                public void put(Runnable runnable) {
-                    runnable.run();
-                }
-
-                @Override
-                public void put(Event event) {
-                    event.run();
-                }
-
-                @Override
-				protected void post(Event event) {
-					//ThreadDispatcher.dispatchOnMainThread(event, false);
-                    event.run();
-				}
-
-			};
 
 //			Thread thread = new Thread(eventDispatcher, EventDispatcher.EVENT_DISPATCHER_NAME);
 //			thread.setDaemon(true);
