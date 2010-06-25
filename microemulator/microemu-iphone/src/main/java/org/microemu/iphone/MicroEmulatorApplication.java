@@ -26,6 +26,7 @@
  */
 package org.microemu.iphone;
 
+import org.xmlvm.iphone.NSObject;
 import org.xmlvm.iphone.UIApplication;
 
 
@@ -37,8 +38,12 @@ public class MicroEmulatorApplication extends UIApplication {
 	}
 
     @Override
-    public void applicationDidFinishLaunching(UIApplication app) {
-        new MicroEmulator().applicationDidFinishLaunching(app);
+    public void applicationDidFinishLaunching(final UIApplication app) {
+        MicroEmulator microEmulator = new MicroEmulator();
+        NSObject.performSelectorOnMainThread(microEmulator,"applicationDidFinishLaunching", app, false);
 
+        if(app==null){
+            microEmulator.applicationDidFinishLaunching(app);
+        }
     }
 }

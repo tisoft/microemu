@@ -155,7 +155,7 @@ public class MicroEmulator {
         return deviceDisplay;
     }
 
-    public void applicationDidFinishLaunching(UIApplication app) {
+    public void applicationDidFinishLaunching(Object app) {
         UIScreen screen = UIScreen.mainScreen();
         CGRect rect = screen.getApplicationFrame();
         System.out.println(rect.origin.x + " " + rect.origin.y + " " + rect.size.width + " " + rect.size.height);
