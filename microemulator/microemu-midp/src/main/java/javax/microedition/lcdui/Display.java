@@ -141,7 +141,7 @@ public class Display {
 		private int keyCode;
 
 		KeyEvent(short type, int keyCode) {
-			eventDispatcher.super();
+			super();
 			this.type = type;
 			this.keyCode = keyCode;
 		}
@@ -169,18 +169,18 @@ public class Display {
 		}
 	}
 	
-	private final class HideNotifyEvent extends EventDispatcher.RunnableEvent {
+	private static final class HideNotifyEvent extends EventDispatcher.RunnableEvent {
 
 		public HideNotifyEvent(EventDispatcher eventDispatcher, Runnable runnable) {
-			eventDispatcher.super(runnable);
+			super(runnable);
 		}
 
 	}
 
-	private final class ShowNotifyEvent extends EventDispatcher.RunnableEvent {
+	private static final class ShowNotifyEvent extends EventDispatcher.RunnableEvent {
 
 		public ShowNotifyEvent(EventDispatcher eventDispatcher, Runnable runnable) {
-			eventDispatcher.super(runnable);
+			super(runnable);
 		}
 
 	}
@@ -620,7 +620,7 @@ public class Display {
 
 	void repaint(Displayable d, int x, int y, int width, int height) {
 		if (current == d) {
-			eventDispatcher.put(eventDispatcher.new PaintEvent(x, y, width, height));
+			eventDispatcher.put(new EventDispatcher.PaintEvent(x, y, width, height));
 		}
 	}
 

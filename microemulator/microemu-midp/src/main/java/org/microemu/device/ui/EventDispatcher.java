@@ -164,13 +164,13 @@ public class EventDispatcher implements Runnable {
 		event.run();
 	}
 
-	public abstract class Event implements Runnable {
+	public static abstract class Event implements Runnable {
 
 		Event next = null;
 
 	}
 
-	public final class PaintEvent extends Event {
+	public static final class PaintEvent extends Event {
 
 		private int x = -1, y = -1, width = -1, height = -1;
 
@@ -234,7 +234,7 @@ public class EventDispatcher implements Runnable {
 		}
 	}
 	
-	public class RunnableEvent extends Event {
+	public static class RunnableEvent extends Event {
 
 		private Runnable runnable;
 
