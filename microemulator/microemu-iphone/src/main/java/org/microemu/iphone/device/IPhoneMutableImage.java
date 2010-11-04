@@ -26,13 +26,13 @@
  */
 package org.microemu.iphone.device;
 
-import javax.microedition.lcdui.Graphics;
-
 import org.microemu.device.MutableImage;
-
 import org.xmlvm.iphone.CGBitmapContext;
 import org.xmlvm.iphone.CGContext;
 import org.xmlvm.iphone.CGImage;
+import org.xmlvm.iphone.UIGraphics;
+
+import javax.microedition.lcdui.Graphics;
 
 public class IPhoneMutableImage extends MutableImage implements IPhoneImage {
 
@@ -65,11 +65,11 @@ public class IPhoneMutableImage extends MutableImage implements IPhoneImage {
 
 	public CGImage getBitmap() {
 		displayGraphics.flushRenderQueue();
-        CGContext.UIGraphicsPushContext(imageContext);
+        UIGraphics.pushContext(imageContext);
 		try{
-            return CGBitmapContext.UIGraphicsGetImageFromCurrentImageContext().getCGImage();
+            return UIGraphics.getImageFromCurrentImageContext().getCGImage();
         } finally {
-            CGContext.UIGraphicsPopContext();
+            UIGraphics.popContext();
         }
 	}
 

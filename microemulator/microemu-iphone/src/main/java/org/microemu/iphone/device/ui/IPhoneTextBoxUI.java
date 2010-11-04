@@ -25,14 +25,13 @@
  */
 package org.microemu.iphone.device.ui;
 
-import javax.microedition.lcdui.Introspect;
-import javax.microedition.lcdui.TextBox;
-import javax.microedition.lcdui.TextField;
-
-
 import org.microemu.device.ui.TextBoxUI;
 import org.microemu.iphone.MicroEmulator;
 import org.xmlvm.iphone.*;
+
+import javax.microedition.lcdui.Introspect;
+import javax.microedition.lcdui.TextBox;
+import javax.microedition.lcdui.TextField;
 
 public class IPhoneTextBoxUI extends AbstractDisplayableUI<TextBox> implements TextBoxUI {
 
@@ -82,7 +81,11 @@ public class IPhoneTextBoxUI extends AbstractDisplayableUI<TextBox> implements T
         textField.insert(text, position);
     }
 
-    public void hideNotify() {
+	public void delete(int offset, int length) {
+		textField.delete(offset, length);
+	}
+
+	public void hideNotify() {
         // TODO Auto-generated method stub
 
     }

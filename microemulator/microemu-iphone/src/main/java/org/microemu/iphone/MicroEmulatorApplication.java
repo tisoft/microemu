@@ -28,13 +28,14 @@ package org.microemu.iphone;
 
 import org.xmlvm.iphone.NSObject;
 import org.xmlvm.iphone.UIApplication;
+import org.xmlvm.iphone.UIApplicationDelegate;
 
 
-public class MicroEmulatorApplication extends UIApplication {
+public class MicroEmulatorApplication extends UIApplicationDelegate{
 
 	public static void main(String[] args) throws Exception {
 		// Main.main(new String[] { HelloJava.class.getName() });
-        UIApplication.main(args, MicroEmulatorApplication.class);
+        UIApplication.main(args, UIApplication.class, MicroEmulatorApplication.class);
 	}
 
     @Override

@@ -40,6 +40,9 @@ import org.microemu.MIDletBridge;
 import org.microemu.MicroEmulator;
 import org.microemu.device.DeviceDisplay;
 import org.microemu.device.ui.DisplayableUI;
+import org.microemu.iphone.device.ui.IPhoneCanvasUI;
+import org.xmlvm.iphone.CGRect;
+import org.xmlvm.iphone.UIView;
 
 public class IPhoneDeviceDisplay implements DeviceDisplay {
 	
@@ -304,18 +307,18 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 		// }
 		// TODO
 		// Font oldf = g.getFont();
-//		if (current instanceof IPhoneCanvasUI) {
-//			UIView view = ((IPhoneCanvasUI) current).getCanvasView();
-//			System.out.println("Need paint: "+this+" "+view);
-//			view.setNeedsDisplay();
+		if (current instanceof IPhoneCanvasUI) {
+			UIView view = ((IPhoneCanvasUI) current).getCanvasView();
+			System.out.println("Need paint: "+this+" "+view);
+			view.setNeedsDisplay();
 //			view.setNeedsDisplayInRect$(new CGRect(x,y,width,height));
 //		} else if (current instanceof IPhoneFormUI){
 //			IPhoneFormUI formUI=(IPhoneFormUI)current;
 //			formUI.updateLayout();
-//		} else {
+		} else {
 			// TODO extend DisplayableUI interface
 			//current.paint();
-//		}
+		}
 		// TODO
 		// g.setFont(oldf);
 		// TODO

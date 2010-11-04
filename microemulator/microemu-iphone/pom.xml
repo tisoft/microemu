@@ -52,7 +52,7 @@
                 <configuration>
                     <options>
                         <option>-dontoptimize</option>
-                        <option>-keep public class * extends org.xmlvm.iphone.UIApplication { *; }</option>
+                        <option>-keep public class * extends org.xmlvm.iphone.UIApplicationDelegate { *; }</option>
                         <option>-keep public class ${microemu.iphone.midlet} { *; }</option>
                         <option>-whyareyoukeeping class *</option>
                     </options>

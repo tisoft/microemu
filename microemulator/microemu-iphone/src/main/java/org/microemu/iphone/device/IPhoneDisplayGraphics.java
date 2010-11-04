@@ -28,10 +28,7 @@ package org.microemu.iphone.device;
 
 import org.microemu.device.DeviceFactory;
 import org.microemu.device.impl.Rectangle;
-import org.xmlvm.iphone.CGContext;
-import org.xmlvm.iphone.CGImage;
-import org.xmlvm.iphone.CGRect;
-import org.xmlvm.iphone.UIFont;
+import org.xmlvm.iphone.*;
 
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Image;
@@ -563,18 +560,18 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
         // flushRenderQueue();
     }
 
-    final void flushRenderQueue() {
+    public final void flushRenderQueue() {
         System.out.println("IPhoneDisplayGraphics.flushRenderQueue() " + renderQueue.size());
         synchronized (renderQueue) {
 
-            CGContext.UIGraphicsPushContext(context);
+            UIGraphics.pushContext(context);
 
             while (!renderQueue.isEmpty()) {
                 Renderable renderable = renderQueue.poll();
                 renderable.render();
             }
 
-            CGContext.UIGraphicsPopContext();
+            UIGraphics.popContext();
 
         }
     }

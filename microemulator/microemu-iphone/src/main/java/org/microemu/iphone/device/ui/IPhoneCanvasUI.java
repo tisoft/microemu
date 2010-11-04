@@ -25,24 +25,15 @@
  */
 package org.microemu.iphone.device.ui;
 
-import java.awt.event.KeyEvent;
-
-import javax.microedition.lcdui.Canvas;
-
 import org.microemu.MIDletAccess;
 import org.microemu.MIDletBridge;
 import org.microemu.device.ui.CanvasUI;
 import org.microemu.iphone.MicroEmulator;
+import org.microemu.iphone.device.IPhoneDisplayGraphics;
 import org.microemu.iphone.device.IPhoneMutableImage;
-import org.xmlvm.iphone.CGContext;
-import org.xmlvm.iphone.CGImage;
-import org.xmlvm.iphone.CGPoint;
-import org.xmlvm.iphone.CGRect;
-import org.xmlvm.iphone.UIColor;
-import org.xmlvm.iphone.UITextField;
-import org.xmlvm.iphone.UIToolbar;
-import org.xmlvm.iphone.UITouch;
-import org.xmlvm.iphone.UIView;
+import org.xmlvm.iphone.*;
+
+import javax.microedition.lcdui.Canvas;
 
 public class IPhoneCanvasUI extends AbstractDisplayableUI<Canvas> implements CanvasUI {
 
@@ -77,23 +68,22 @@ public class IPhoneCanvasUI extends AbstractDisplayableUI<Canvas> implements Can
 			if (ma == null) {
 				return;
 			}
-			CGContext context = CGContext.UICurrentContext();
+			CGContext context = UIGraphics.getCurrentContext();
             context.translate(0, canvas.getHeight());
             context.scale(1.0f, -1.0f);
 
-            context.setFillColor(new float[]{0.5f,1,1,0.5f});
-            context.fillRect(new CGRect(10,10,20,20));
-
-//			CoreGraphics.CGContextSaveGState(context);
-//			Graphics g = new IPhoneDisplayGraphics(context, canvas.getWidth(), canvas.getHeight(), false);
+			context.storeState();
+			IPhoneDisplayGraphics g = new IPhoneDisplayGraphics(context, canvas.getWidth(), canvas.getHeight(), false);
+            ma.getDisplayAccess().paint(g);
+            g.flushRenderQueue();
 			ma.getDisplayAccess().paint(offscreen.getGraphics());
 
-			CGRect rect=new CGRect(0, 0, offscreen.getWidth(), offscreen.getHeight());
-	        CGImage bitmap = offscreen.getBitmap();
-            context.drawImage(rect, bitmap);
+//			CGRect rect=new CGRect(0, 0, offscreen.getWidth(), offscreen.getHeight());
+//	        CGImage bitmap = offscreen.getBitmap();
+//            context.drawImage(rect, bitmap);
 //			CoreGraphics.CGImageRelease(bitmap);
 //			g.drawString("XXX", 100, 100, 0);
-//			CoreGraphics.CGContextRestoreGState(context);
+			context.restoreState();
 		}
 	}
 
