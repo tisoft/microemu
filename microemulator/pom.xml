@@ -63,7 +63,7 @@
         <module>microemu-injected</module>
         <module>microemu-javase</module>
         <module>microemu-javase-swing</module>
-        <module>microemu-javase-applet</module>
+<!--        <module>microemu-javase-applet</module>-->
         <!-- only buildByMicroEmulatorTeam edit settings.xml to enable -->
         <!--module>microemu-javase-swt</module-->
         <module>microemu-extensions</module>
